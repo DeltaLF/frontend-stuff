@@ -1,0 +1,15 @@
+.Navbar {
+  &--icon {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &--icon:hover {
+    cursor: pointer;
+    filter: brightness(50%);
+    svg {
+      transform: scale(1.2);
+    }
+  }
+}

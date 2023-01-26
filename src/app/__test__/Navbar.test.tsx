@@ -24,3 +24,23 @@ test('redner home page by default', async () => {
   await user.click(utilsNav);
   expect(global.window.location.pathname).toContain('/utils');
 });
+
+test('toggle theme', async () => {
+  const { container } = render(<Navbar />, { wrapper: BrowserRouter });
+  const user = userEvent.setup();
+  const themeDOMInit = document.documentElement.getAttribute('data-theme');
+  expect(themeDOMInit).toBeNull();
+
+  // clcik theme toggle
+  const themeToggle = container.getElementsByClassName('Navbar--icon');
+  expect(themeToggle).toHaveLength(1);
+  await user.click(themeToggle[0]);
+  // expect(themeToggle).toBeInTheDocument();
+  const themeDark = document.documentElement.getAttribute('data-theme');
+  expect(themeDark).toBe('dark');
+
+  // light
+  await user.click(themeToggle[0]);
+  const themeLight = document.documentElement.getAttribute('data-theme');
+  expect(themeLight).toBe('light');
+});
