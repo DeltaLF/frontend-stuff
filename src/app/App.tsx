@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.scss';
-import Main from './Main';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import './components/App.scss';
+import Main from './components/Main';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
   return (

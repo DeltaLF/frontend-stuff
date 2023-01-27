@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Navbar from '../Navbar';
+import Navbar from '../components/Navbar';
 import { BrowserRouter } from 'react-router-dom';
 
 test('redner home page by default', async () => {

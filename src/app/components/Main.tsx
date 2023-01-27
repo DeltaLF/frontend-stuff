@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from '../components/pages/home/Home';
-import RTKpage from '../components/pages/rtk/RTKpage';
-import GraphqlPage from '../components/pages/graphql/GraphqlPage';
-import UtilsPage from '../components/pages/utilsPage/UtilsPage';
+import Home from '../../components/pages/home/Home';
+import RTKpage from '../../components/pages/rtk/RTKpage';
+import GraphqlPage from '../../components/pages/graphql/GraphqlPage';
+import UtilsPage from '../../components/pages/utilsPage/UtilsPage';
 import './main.scss';
 
 function Main() {
