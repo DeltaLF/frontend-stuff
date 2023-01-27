@@ -1,0 +1,13 @@
+.Footer {
+  background-color: var(--sub-background-color);
+  width: 100%;
+  height: 15vh;
+  border-top: 1px solid var(--color-gray);
+  color: var(--color-white);
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  .copyright {
+    margin-bottom: 2rem;
+  }
+}

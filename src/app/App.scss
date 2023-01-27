@@ -2,18 +2,29 @@
   --background-color: #fff;
   --text-color: #121416d8;
   --link-color: #543fd7;
+
+  --color-gray: #aaa;
+  --sub-background-color: #303846;
 }
 
 html[data-theme='light'] {
   --background-color: #fff;
   --text-color: #121416d8;
   --link-color: #543fd7;
+
+  --color-white: #f7f8f8;
+  --color-gray: #aaa;
+  --sub-background-color: #303846;
 }
 
 html[data-theme='dark'] {
   --background-color: #212a2e;
   --text-color: #f7f8f8;
   --link-color: #828fff;
+
+  --color-white: #f7f8f8;
+  --color-gray: #aaa;
+  --sub-background-color: #212a2e;
 }
 
 body {
@@ -31,6 +42,8 @@ a:hover {
 .App {
   text-align: center;
   height: 100vh;
-  background-color: var(--background-color) !important;
-  color: var(--text-color) !important;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
 }
