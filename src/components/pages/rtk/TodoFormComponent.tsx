@@ -86,6 +86,7 @@ function TodoFormComponent() {
                 required
                 value={todoForm.content}
                 rows={5}
+                maxLength={150}
                 onChange={(val) => {
                   setTodoForm({ ...todoForm, content: val.target.value });
                 }}
