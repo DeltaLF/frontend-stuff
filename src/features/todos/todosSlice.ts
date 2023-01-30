@@ -9,10 +9,13 @@ enum TodoPhase {
   canceled = 'canceled',
 }
 
-interface TodoState {
-  id: string;
+export interface TodoForm {
   title: string;
   content: string;
+}
+
+export interface TodoState extends TodoForm {
+  id: string;
   phase?: TodoPhase;
   createAt: number; // new Date().getTime()
 }
