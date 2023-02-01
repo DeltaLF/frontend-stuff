@@ -5,9 +5,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import type { PreloadedState } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import type { store, RootState } from '../app/store';
-
-import todosReducer from '../features/todos/todosSlice';
+import type { store, RootState } from '../redux/store';
+import todosReducer from '../redux/features/todos/todosSlice';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>;

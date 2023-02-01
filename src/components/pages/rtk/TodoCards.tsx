@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAppSelector } from '../../../app/hooks';
-import { RootState } from '../../../app/store';
+import { useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
 import TodoCard from './TodoCard';
 import './todo-cards.scss';
 

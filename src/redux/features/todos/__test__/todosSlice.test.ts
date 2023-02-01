@@ -1,4 +1,4 @@
-import { store } from '../../../app/store';
+import { store } from '../../../store';
 import { createOneTodo, deleteOneTodo, deleteAllTodos } from '../todosSlice';
 import { v4 as uuidv4 } from 'uuid';
 

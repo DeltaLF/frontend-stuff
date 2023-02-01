@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { TodoState } from '../../../features/todos/todosSlice';
+import { TodoState } from '../../../redux/features/todos/todosSlice';
 
 type TodoCardType = { todoState: TodoState };
 

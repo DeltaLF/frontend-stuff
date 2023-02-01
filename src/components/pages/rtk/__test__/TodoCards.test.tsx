@@ -3,7 +3,10 @@ import TodoCards from '../TodoCards';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
-import { TodoState, TodoPhase } from '../../../../features/todos/todosSlice';
+import {
+  TodoState,
+  TodoPhase,
+} from '../../../../redux/features/todos/todosSlice';
 
 describe('tests TodoCards can access data from todoSlice and render it', () => {
   const title = 'first test todo title';

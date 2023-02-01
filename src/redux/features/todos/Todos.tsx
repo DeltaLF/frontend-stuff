@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createOneTodo, deleteOneTodo } from './todosSlice';
 import Button from 'react-bootstrap/Button';
 import { v4 as uuidv4 } from 'uuid';
-import { RootState } from '../../app/store';
+import { RootState } from '../../store';
 
 const TodoComponent = () => {
+  /*
+  A component to quickly test todoSlice but not actually used. 
+  */
   const [ids, setIds] = useState<string[]>([]);
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state: RootState) => state.todos.todos);

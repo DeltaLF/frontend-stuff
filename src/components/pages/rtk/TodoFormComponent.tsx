@@ -2,8 +2,11 @@ import React, { FormEvent, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import BootstrapForm from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { createOneTodo, TodoForm } from '../../../features/todos/todosSlice';
-import { useAppDispatch } from '../../../app/hooks';
+import {
+  createOneTodo,
+  TodoForm,
+} from '../../../redux/features/todos/todosSlice';
+import { useAppDispatch } from '../../../redux/hooks';
 import { v4 as uuidv4 } from 'uuid';
 import {
   Formik,

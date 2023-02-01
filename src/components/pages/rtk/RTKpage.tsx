@@ -1,6 +1,5 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import TodoComponent from '../../../features/todos/Todos';
 import TodoCards from './TodoCards';
 import TodoFormComponent from './TodoFormComponent';
 
