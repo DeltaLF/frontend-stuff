@@ -7,19 +7,22 @@ import { Provider } from 'react-redux';
 
 import type { store, RootState } from '../redux/store';
 import todosReducer from '../redux/features/todos/todosSlice';
+import { jokeApi } from '../redux/apis/joke/jokeApi';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: PreloadedState<RootState>;
+  preloadedState?: PreloadedState<Partial<RootState>>;
   store?: typeof store;
 }
 
 function render(
   ui: React.ReactElement,
   {
-    preloadedState = { todos: { todos: [] } },
+    preloadedState = {
+      todos: { todos: [] },
+    },
     store = configureStore({
       preloadedState,
-      reducer: { todos: todosReducer },
+      reducer: { todos: todosReducer, jokeApi: jokeApi.reducer },
     }),
     ...renderOptions
   }: ExtendedRenderOptions

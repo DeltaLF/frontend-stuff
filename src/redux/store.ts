@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todosReducer from './features/todos/todosSlice';
+import { jokeApi } from './apis/joke/jokeApi';
 
 export const store = configureStore({
   reducer: {
     todos: todosReducer,
+    [jokeApi.reducerPath]: jokeApi.reducer,
   },
+  middleware: (getDefaultModdleware) =>
+    getDefaultModdleware().concat(jokeApi.middleware),
 });
 
 // share the store state type
