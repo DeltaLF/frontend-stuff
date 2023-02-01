@@ -1,49 +1,51 @@
 import React, { FormEvent, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import BootstrapForm from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { createOneTodo, TodoForm } from '../../../features/todos/todosSlice';
 import { useAppDispatch } from '../../../app/hooks';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  Formik,
+  FormikHelpers,
+  FormikProps,
+  Form,
+  Field,
+  FieldProps,
+} from 'formik';
+
+interface TodoFormErrors {
+  title?: string;
+  content?: string;
+}
 
 function TodoFormComponent() {
   const dispatch = useAppDispatch();
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
-  const [validated, setValidated] = useState(false);
-  const [todoForm, setTodoForm] = useState<TodoForm>({
+  const initialValues: TodoForm = {
     title: '',
     content: '',
-  });
+  };
+
   function handleModalShow() {
     setIsModalShown(true);
   }
   function hanldeModalClose() {
     setIsModalShown(false);
   }
-  function handleSubmitTodo(event: FormEvent) {
-    event.preventDefault();
-    const form = event.currentTarget as HTMLInputElement;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      setValidated(true);
-      return;
-    }
-    const { title, content } = todoForm;
-    // dispatch createOneTodo action
-    dispatch(
-      createOneTodo({
-        id: uuidv4(),
-        title,
-        content,
-        createAt: new Date().getTime(),
-      })
-    );
-    hanldeModalClose();
-    // inital state after submited
-    setTodoForm({ title: '', content: '' });
-    setValidated(false);
+
+  function handleValidation(values: TodoForm) {
+    const { title, content } = values;
+    const errors: TodoFormErrors = {};
+    if (!title) {
+      errors.title = 'Required';
+    } else if (title.length < 5) errors.title = 'Input at least 5 letters';
+    if (!content) {
+      errors.content = 'Required';
+    } else if (content.length < 5) errors.content = 'Input at least 5 letters';
+    return errors;
   }
+
   return (
     <>
       <h3>Add a new todo task</h3>
@@ -60,40 +62,69 @@ function TodoFormComponent() {
           <Modal.Title>Create a new todo task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form
-            id="todo-form"
-            noValidate
-            validated={validated}
-            onSubmit={handleSubmitTodo}
+          <Formik
+            initialValues={initialValues}
+            validate={handleValidation}
+            onSubmit={(values, actions) => {
+              const { title, content } = values;
+              // dispatch createOneTodo action
+              dispatch(
+                createOneTodo({
+                  id: uuidv4(),
+                  title,
+                  content,
+                  createAt: new Date().getTime(),
+                })
+              );
+              hanldeModalClose();
+              actions.setSubmitting(false);
+            }}
           >
-            <Form.Group className="mb-3" controlId="todoTitle">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                required
-                value={todoForm.title}
-                onChange={(val) => {
-                  setTodoForm({ ...todoForm, title: val.target.value });
-                }}
-                placeholder="enter title"
-              ></Form.Control>
-            </Form.Group>
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <BootstrapForm
+                noValidate
+                id="todo-form"
+                role="form"
+                onSubmit={handleSubmit}
+              >
+                <BootstrapForm.Group className="mb-3" controlId="todoTitle">
+                  <BootstrapForm.Label>Title</BootstrapForm.Label>
+                  <BootstrapForm.Control
+                    type="text"
+                    name="title"
+                    required
+                    isInvalid={!!touched.title && !!errors.title}
+                    value={values.title}
+                    onChange={handleChange}
+                    placeholder="enter title"
+                  />
+                  <div className="invalid-feedback">{errors.title}</div>
+                </BootstrapForm.Group>
 
-            <Form.Group controlId="todoContent">
-              <Form.Label>Content</Form.Label>
-              <Form.Control
-                as="textarea"
-                required
-                value={todoForm.content}
-                rows={5}
-                maxLength={150}
-                onChange={(val) => {
-                  setTodoForm({ ...todoForm, content: val.target.value });
-                }}
-                placeholder="enter todo task content"
-              ></Form.Control>
-            </Form.Group>
-          </Form>
+                <BootstrapForm.Group controlId="todoContent">
+                  <BootstrapForm.Label>Content</BootstrapForm.Label>
+                  <BootstrapForm.Control
+                    as="textarea"
+                    name="content"
+                    value={values.content}
+                    rows={5}
+                    isInvalid={!!touched.content && !!errors.content}
+                    maxLength={150}
+                    onChange={handleChange}
+                    placeholder="enter todo task content"
+                  />
+                  <div className="invalid-feedback">{errors.content}</div>
+                </BootstrapForm.Group>
+              </BootstrapForm>
+            )}
+          </Formik>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={hanldeModalClose}>
