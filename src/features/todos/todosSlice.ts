@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
-enum TodoPhase {
+export enum TodoPhase {
   pending = 'pending',
   processing = 'processing',
   finished = 'finished',

@@ -1,9 +1,4 @@
-import {
-  findByLabelText,
-  render,
-  screen,
-  waitFor,
-} from '../../../../utils/test-utils';
+import { render, screen, waitFor } from '../../../../utils/test-utils';
 import TodoFormComponent from '../TodoFormComponent';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
