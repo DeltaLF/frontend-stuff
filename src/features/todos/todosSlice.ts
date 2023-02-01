@@ -2,17 +2,20 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
-enum TodoPhase {
+export enum TodoPhase {
   pending = 'pending',
   processing = 'processing',
   finished = 'finished',
   canceled = 'canceled',
 }
 
-interface TodoState {
-  id: string;
+export interface TodoForm {
   title: string;
   content: string;
+}
+
+export interface TodoState extends TodoForm {
+  id: string;
   phase?: TodoPhase;
   createAt: number; // new Date().getTime()
 }
