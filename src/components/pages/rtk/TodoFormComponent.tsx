@@ -38,10 +38,10 @@ function TodoFormComponent() {
     const { title, content } = values;
     const errors: TodoFormErrors = {};
     if (!title) {
-      errors.title = 'Required';
+      errors.title = 'Title is required';
     } else if (title.length < 5) errors.title = 'Input at least 5 letters';
     if (!content) {
-      errors.content = 'Required';
+      errors.content = 'Content is required';
     } else if (content.length < 5) errors.content = 'Input at least 5 letters';
     return errors;
   }
