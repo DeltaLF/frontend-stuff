@@ -23,6 +23,8 @@ function render(
     store = configureStore({
       preloadedState,
       reducer: { todos: todosReducer, jokeApi: jokeApi.reducer },
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(jokeApi.middleware),
     }),
     ...renderOptions
   }: ExtendedRenderOptions

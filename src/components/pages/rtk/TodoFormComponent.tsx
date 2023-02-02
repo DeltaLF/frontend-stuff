@@ -16,7 +16,7 @@ import {
   Field,
   FieldProps,
 } from 'formik';
-import JokeGenerator from './joke-generator';
+import JokeGenerator from './JokeGenerator';
 
 interface TodoFormErrors {
   title?: string;

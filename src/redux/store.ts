@@ -7,8 +7,8 @@ export const store = configureStore({
     todos: todosReducer,
     [jokeApi.reducerPath]: jokeApi.reducer,
   },
-  middleware: (getDefaultModdleware) =>
-    getDefaultModdleware().concat(jokeApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(jokeApi.middleware),
 });
 
 // share the store state type
