@@ -16,6 +16,7 @@ import {
   Field,
   FieldProps,
 } from 'formik';
+import JokeGenerator from './joke-generator';
 
 interface TodoFormErrors {
   title?: string;
@@ -53,8 +54,10 @@ function TodoFormComponent() {
     <>
       <h3>Add a new todo task</h3>
       <Button variant="success" onClick={handleModalShow}>
-        create
+        Create
       </Button>
+      <JokeGenerator />
+
       <Modal
         show={isModalShown}
         onHide={hanldeModalClose}
