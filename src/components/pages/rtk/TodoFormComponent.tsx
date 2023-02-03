@@ -6,6 +6,7 @@ import {
   createOneTodo,
   TodoForm,
 } from '../../../redux/features/todos/todosSlice';
+import JokeQLGenerator from './JokeQLGenerator';
 import { useAppDispatch } from '../../../redux/hooks';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -57,6 +58,7 @@ function TodoFormComponent() {
         Create
       </Button>
       <JokeGenerator />
+      <JokeQLGenerator />
 
       <Modal
         show={isModalShown}
