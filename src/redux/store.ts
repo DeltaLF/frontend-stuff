@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todosReducer from './features/todos/todosSlice';
 import { jokeApi } from './apis/joke/jokeApi';
+import logger from 'redux-logger';
 
 export const store = configureStore({
   reducer: {
@@ -8,7 +9,8 @@ export const store = configureStore({
     [jokeApi.reducerPath]: jokeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(jokeApi.middleware),
+    getDefaultMiddleware().concat(logger).concat(jokeApi.middleware),
+  devTools: process.env.NODE_ENV != 'production',
 });
 
 // share the store state type
