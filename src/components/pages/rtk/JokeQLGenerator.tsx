@@ -20,13 +20,12 @@ function JokeQLGenerator() {
   const properties = useGetRandomJokeQLQuery(jokeOptions, { skip: isSkipped });
 
   const { data, error, isLoading, refetch } = properties;
-
   useEffect(() => {
     if (data) {
       const { id, joke, permalink } = data;
-      const content = `${id ? 'joke id: ' + id + '\r\n' : ''} ${joke} ${
-        permalink ? '\r\njoke link: ' + permalink : ''
-      }`;
+      const content = `${id ? 'joke id: ' + id + '\r\n' : ''} ${
+        joke ? joke + '\r\n' : ''
+      } ${permalink ? 'joke link: ' + permalink : ''}`;
 
       dispatch(
         createOneTodo({
