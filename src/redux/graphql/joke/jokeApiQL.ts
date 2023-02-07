@@ -1,9 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { request, gql, ClientError } from 'graphql-request';
 import { JOKE_SERVER_URL } from '../../apis/joke/jokeApi';
-import { JokeQL } from './types';
+import { JokeQL, JokeQLKey, JokeQLOptions } from './types';
 
-const JOKE_GRAPHQL_SERVER_URL = JOKE_SERVER_URL + 'graphql';
+export const JOKE_GRAPHQL_SERVER_URL = JOKE_SERVER_URL + 'graphql';
 
 const jokeGraphqlBaseQuery =
   ({ baseUrl }: { baseUrl: string }) =>
@@ -25,9 +25,14 @@ export const jokeQLApi = createApi({
     baseUrl: JOKE_GRAPHQL_SERVER_URL,
   }),
   endpoints: (builder) => ({
-    getRandomJokeQL: builder.query<JokeQL, void>({
-      query: () => {
-        const queryKey = 'id joke permalink';
+    getRandomJokeQL: builder.query<JokeQL, JokeQLOptions>({
+      query: (jokeQLOptions) => {
+        let queryKey = ''; //'id joke permalink';
+        for (const key in jokeQLOptions) {
+          if (!!jokeQLOptions[key as JokeQLKey] as boolean) {
+            queryKey += key + ' ';
+          }
+        }
         return {
           body: gql`
             query {

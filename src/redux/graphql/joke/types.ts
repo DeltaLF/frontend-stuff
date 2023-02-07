@@ -4,6 +4,10 @@ export enum JokeQLKey {
   permalink = 'permalink',
 }
 
+export type JokeQLOptions = {
+  [key in JokeQLKey]: boolean;
+};
+
 export interface JokeQL {
   id: string;
   joke: string;
