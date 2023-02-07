@@ -13,7 +13,6 @@ describe('test joke generator button', () => {
     await user.click(fetchJokeButton);
     await waitFor(() => {
       const { todos, jokeApi } = store.getState();
-      console.log(todos, jokeApi);
       expect(todos.todos[0].title).toBe('Read a joke');
     });
   });

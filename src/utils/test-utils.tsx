@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import type { store, RootState } from '../redux/store';
 import todosReducer from '../redux/features/todos/todosSlice';
 import { jokeApi } from '../redux/apis/joke/jokeApi';
+import { jokeQLApi } from '../redux/graphql/joke/jokeApiQL';
 import logger from 'redux-logger';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
@@ -23,9 +24,16 @@ function render(
     },
     store = configureStore({
       preloadedState,
-      reducer: { todos: todosReducer, jokeApi: jokeApi.reducer },
+      reducer: {
+        todos: todosReducer,
+        jokeApi: jokeApi.reducer,
+        jokeQLApi: jokeQLApi.reducer,
+      },
       middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(logger).concat(jokeApi.middleware),
+        getDefaultMiddleware()
+          .concat(logger)
+          .concat(jokeApi.middleware)
+          .concat(jokeQLApi.middleware),
       devTools: process.env.NODE_ENV != 'production',
     }),
     ...renderOptions

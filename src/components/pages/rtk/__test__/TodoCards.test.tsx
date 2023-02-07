@@ -24,7 +24,6 @@ describe('tests TodoCards can access data from todoSlice and render it', () => {
         todos: { todos: [todoInstance, todoInstance, todoInstance] },
       },
     });
-    console.log(screen.debug());
     const titleElements = screen.getAllByText(title);
     expect(titleElements).toHaveLength(3);
 

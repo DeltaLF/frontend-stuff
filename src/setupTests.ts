@@ -5,7 +5,8 @@
 import '@testing-library/jest-dom';
 import { server } from '../mocks/server';
 
-beforeAll(() => server.listen());
+// onUnhandledRequest helps finding unhandling request (either rest, graphql)
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
 afterEach(() => server.restoreHandlers());
 
