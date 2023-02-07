@@ -10,7 +10,9 @@ function TodoCard({ todoState }: TodoCardType) {
   const parsedTime = new Date(createAt);
   return (
     <Card className="todo-card">
-      <Card.Header>{title}</Card.Header>
+      <Card.Header>
+        <h5> {title}</h5>
+      </Card.Header>
       <Card.Body>
         <blockquote className="blockquote mb-0">
           <p>{content}</p>
