@@ -37,6 +37,16 @@ export const todosSlice = createSlice({
       newTodo.phase = TodoPhase.pending;
       state.todos = [...state.todos, newTodo];
     },
+    updateOneTodo: (state, action: PayloadAction<Partial<TodoState>>) => {
+      const { content, title, id } = action.payload;
+      state.todos = state.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.content = content ? content : todo.content;
+          todo.title = title ? title : todo.title;
+        }
+        return todo;
+      });
+    },
     deleteOneTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
@@ -46,7 +56,7 @@ export const todosSlice = createSlice({
   },
 });
 
-export const { createOneTodo, deleteOneTodo, deleteAllTodos } =
+export const { createOneTodo, deleteOneTodo, deleteAllTodos, updateOneTodo } =
   todosSlice.actions;
 
 export const selectTodos = (state: RootState) => state.todos.todos;

@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '../../../../utils/test-utils';
-import TodoFormComponent from '../TodoFormComponent';
+import RTKpage from '../RTKpage';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 
 describe('test todo form component', () => {
   it('tests modal behavior', async () => {
-    render(<TodoFormComponent />, {});
+    render(<RTKpage />, {});
     const user = userEvent.setup();
     // no modal is shown
     const modalHeaderInit = screen.queryByText(/Create a new todo task/i);
@@ -38,7 +38,7 @@ describe('test todo form component', () => {
 
   it('tests submit form functionality', async () => {
     // able to submit form
-    render(<TodoFormComponent />, {});
+    render(<RTKpage />, {});
     const user = userEvent.setup();
 
     // open modal
@@ -61,7 +61,7 @@ describe('test todo form component', () => {
   });
 
   it('tests validation of form', async () => {
-    const { container } = render(<TodoFormComponent />, {});
+    const { container } = render(<RTKpage />, {});
     const user = userEvent.setup();
     // open modal
     const openModalButton = screen.getByRole('button', { name: /create/i });

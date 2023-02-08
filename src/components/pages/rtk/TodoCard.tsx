@@ -5,6 +5,7 @@ import './todo-card.scss';
 import Button from 'react-bootstrap/Button';
 import { useAppDispatch } from '../../../redux/hooks';
 import { deleteOneTodo } from '../../../redux/features/todos/todosSlice';
+import UpdateTodo from './UpdateTodo';
 
 type TodoCardType = { todoState: TodoState };
 
@@ -40,6 +41,7 @@ function TodoCard({ todoState }: TodoCardType) {
     <Card className="todo-card">
       <Card.Header>
         <h5> {title}</h5>
+        <UpdateTodo todoState={todoState} />
         <Button aria-label="Delete" onClick={handleDeleteTodo} variant="danger">
           <div>&#120;</div>
         </Button>

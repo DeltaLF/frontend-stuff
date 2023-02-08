@@ -8,7 +8,14 @@
       padding-right: 0.5rem;
       text-transform: capitalize;
     }
-
+    svg {
+      width: 2rem;
+      height: 1.4rem;
+      &:hover {
+        cursor: pointer;
+        opacity: 70%;
+      }
+    }
     .btn {
       position: relative;
       padding: 0.6rem 0.6rem;
