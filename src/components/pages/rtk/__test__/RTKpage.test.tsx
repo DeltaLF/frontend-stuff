@@ -3,24 +3,24 @@ import RTKpage from '../RTKpage';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 
-describe('test todo form component', () => {
+describe('test create todo form component', () => {
   it('tests modal behavior', async () => {
     render(<RTKpage />, {});
     const user = userEvent.setup();
     // no modal is shown
-    const modalHeaderInit = screen.queryByText(/Create a new todo task/i);
+    const modalHeaderInit = screen.queryByText(/Create a todo task/i);
     expect(modalHeaderInit).not.toBeInTheDocument();
     // click on create task
     const openModalButton = screen.getByRole('button', { name: /create/i });
     await user.click(openModalButton);
     // a modal shown
-    const modalHeader = screen.queryByText(/Create a new todo task/i);
+    const modalHeader = screen.queryByText(/Create a todo task/i);
     expect(modalHeader).toBeInTheDocument();
     // close button works
     const closeModalButton = screen.getByRole('button', { name: 'Close' });
     await user.click(closeModalButton);
     await waitFor(() => {
-      const modalHeaderClosed = screen.queryByText(/Create a new todo task/i);
+      const modalHeaderClosed = screen.queryByText(/Create a todo task/i);
       expect(modalHeaderClosed).not.toBeInTheDocument();
     });
 
@@ -31,7 +31,7 @@ describe('test todo form component', () => {
 
     await user.click(cancelModalButton);
     await waitFor(() => {
-      const modalHeaderCanceled = screen.queryByText(/Create a new todo task/i);
+      const modalHeaderCanceled = screen.queryByText(/Create a todo task/i);
       expect(modalHeaderCanceled).not.toBeInTheDocument();
     });
   });
@@ -54,7 +54,7 @@ describe('test todo form component', () => {
     await user.click(submitButton);
     await waitFor(() => {
       // the modal disappers after successfully send
-      const modalHeaderCanceled = screen.queryByText(/Create a new todo task/i);
+      const modalHeaderCanceled = screen.queryByText(/Create a todo task/i);
       expect(modalHeaderCanceled).not.toBeInTheDocument();
       // the redux logic is tested in todoSlice.test
     });
@@ -111,6 +111,55 @@ describe('test todo form component', () => {
       expect(isRequiredText).toHaveLength(0);
       const atLeast5Chars = screen.queryAllByText(/Input at least 5/i);
       expect(atLeast5Chars).toHaveLength(0);
+    });
+  });
+});
+
+describe('test edit todo form component', () => {
+  it('tests todo can be edited', async () => {
+    render(<RTKpage />, {});
+    const title = 'Brand new todo';
+    const content = 'todo content';
+    const newTitle = 'new ' + title;
+    const newContent = 'new ' + content;
+    const user = userEvent.setup();
+    const newTodoTitle = screen.queryByText(title);
+    expect(newTodoTitle).not.toBeInTheDocument();
+    // create a todo
+    const openModalButton = screen.getByRole('button', { name: /create/i });
+    await user.click(openModalButton);
+    const titleInput = await screen.findByLabelText('Title');
+    await user.type(titleInput, title);
+    const contentInput = await screen.findByLabelText('Content');
+    await user.type(contentInput, content);
+
+    const submitButton = screen.getByRole('button', { name: 'Submit' });
+    await user.click(submitButton);
+
+    // no edit modal is shown
+    await waitFor(() => {
+      const modalHeaderInit = screen.queryByText(/Create a todo task/i);
+      expect(modalHeaderInit).not.toBeInTheDocument();
+      const editModalHeaderInit = screen.queryByText(/Edit a todo task/i);
+      expect(editModalHeaderInit).not.toBeInTheDocument();
+    });
+    const editButton = screen.getByLabelText('edit-todo')!;
+    await user.click(editButton!.firstChild);
+    const newtitleInput = await screen.findByLabelText('Title');
+    await user.clear(newtitleInput);
+    await user.type(newtitleInput, newTitle);
+    const newContentInput = await screen.findByLabelText('Content');
+    await user.clear(newContentInput);
+    await user.type(newContentInput, newContent);
+    const submitEditButton = await screen.getByRole('button', {
+      name: 'Submit',
+    });
+    await user.click(submitEditButton);
+    await waitFor(() => {
+      const newTitleElement = screen.getByRole('heading', { name: newTitle });
+      expect(newTitleElement).toBeInTheDocument();
+      const newContentEleemnt = screen.getByText(newContent);
+      expect(newContentEleemnt).toBeInTheDocument();
     });
   });
 });

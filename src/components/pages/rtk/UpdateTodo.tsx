@@ -13,7 +13,11 @@ interface UpdateTodo {
 function UpdateTodo({ todoState }: UpdateTodo) {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
   function renderTodoButton(callback: () => void) {
-    return <PencilSquare onClick={callback} />;
+    return (
+      <div className="edit-todo" aria-label="edit-todo">
+        <PencilSquare onClick={callback} />
+      </div>
+    );
   }
   return (
     <TodoFormComponent
