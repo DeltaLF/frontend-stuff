@@ -115,7 +115,7 @@ describe('test create todo form component', () => {
   });
 });
 
-describe('test edit todo form component', () => {
+describe('test edit todo form component and delete', () => {
   it('tests todo can be edited', async () => {
     render(<RTKpage />, {});
     const title = 'Brand new todo';
@@ -143,8 +143,8 @@ describe('test edit todo form component', () => {
       const editModalHeaderInit = screen.queryByText(/Edit a todo task/i);
       expect(editModalHeaderInit).not.toBeInTheDocument();
     });
-    const editButton = screen.getByLabelText('edit-todo')!;
-    await user.click(editButton!.firstChild);
+    const editButton = screen.getByLabelText('edit-todo');
+    await user.click(editButton.firstChild as Element);
     const newtitleInput = await screen.findByLabelText('Title');
     await user.clear(newtitleInput);
     await user.type(newtitleInput, newTitle);
@@ -160,6 +160,42 @@ describe('test edit todo form component', () => {
       expect(newTitleElement).toBeInTheDocument();
       const newContentEleemnt = screen.getByText(newContent);
       expect(newContentEleemnt).toBeInTheDocument();
+    });
+  });
+
+  it('tests todo can be edited', async () => {
+    render(<RTKpage />, {});
+    const title = 'Brand new todo';
+    const content = 'todo content';
+    const user = userEvent.setup();
+    const newTodoTitle = screen.queryByText(title);
+    expect(newTodoTitle).not.toBeInTheDocument();
+    // create a todo
+    const openModalButton = screen.getByRole('button', { name: /create/i });
+    await user.click(openModalButton);
+    const titleInput = await screen.findByLabelText('Title');
+    await user.type(titleInput, title);
+    const contentInput = await screen.findByLabelText('Content');
+    await user.type(contentInput, content);
+
+    const submitButton = screen.getByRole('button', { name: 'Submit' });
+    await user.click(submitButton);
+
+    // new todo is created
+    await waitFor(() => {
+      const modalHeaderInit = screen.queryByText(title);
+      expect(modalHeaderInit).toBeInTheDocument();
+      const editModalHeaderInit = screen.queryByText(content);
+      expect(editModalHeaderInit).toBeInTheDocument();
+    });
+    const deleteButton = screen.getByLabelText('Delete');
+    await user.click(deleteButton);
+    // to-do is gone
+    await waitFor(() => {
+      const modalHeaderInit = screen.queryByText(title);
+      expect(modalHeaderInit).not.toBeInTheDocument();
+      const editModalHeaderInit = screen.queryByText(content);
+      expect(editModalHeaderInit).not.toBeInTheDocument();
     });
   });
 });
