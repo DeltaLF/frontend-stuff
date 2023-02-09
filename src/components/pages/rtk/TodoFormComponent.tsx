@@ -19,7 +19,7 @@ import {
   Field,
   FieldProps,
 } from 'formik';
-import JokeGenerator from './JokeGenerator';
+import JokeGenerator from './JokeQueryGenerator';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit/dist/createAction';
 
 interface TodoFormErrors {

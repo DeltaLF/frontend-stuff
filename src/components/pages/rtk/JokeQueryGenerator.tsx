@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { createOneTodo } from '../../../redux/features/todos/todosSlice';
 import { v4 as v4uuid } from 'uuid';
 
-function JokeGenerator() {
+function JokeQueryGenerator() {
   const dispatch = useAppDispatch();
   const [isSkipped, setIsSkipped] = useState<boolean>(true);
   // skip for prevent fetch data onmount
@@ -32,10 +32,14 @@ function JokeGenerator() {
     }
   }
   return (
-    <Button style={{ marginLeft: '1rem' }} onClick={generateTodoJoke}>
-      Fetch Joke
+    <Button
+      style={{ marginLeft: '1rem' }}
+      variant="secondary"
+      onClick={generateTodoJoke}
+    >
+      Fetch Joke with RTK Query
     </Button>
   );
 }
 
-export default JokeGenerator;
+export default JokeQueryGenerator;

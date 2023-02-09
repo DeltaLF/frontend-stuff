@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import JokeGenerator from './JokeGenerator';
+import JokeQueryGenerator from './JokeQueryGenerator';
 import JokeQLGenerator from './JokeQLGenerator';
 import TodoCards from './TodoCards';
 import CreateTodo from './CreateTodo';
@@ -12,7 +12,7 @@ const RTKpage = () => {
       <h1>RTK page</h1>
       <h3>Add a new todo task</h3>
       <CreateTodo />
-      <JokeGenerator />
+      <JokeQueryGenerator />
       <JokeThunkGenerator />
       <JokeQLGenerator />
 
