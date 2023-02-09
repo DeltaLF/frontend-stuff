@@ -4,7 +4,9 @@ import BootstrapForm from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import {
   createOneTodo,
+  updateOneTodo,
   TodoForm,
+  TodoState,
 } from '../../../redux/features/todos/todosSlice';
 import JokeQLGenerator from './JokeQLGenerator';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -18,18 +20,32 @@ import {
   FieldProps,
 } from 'formik';
 import JokeGenerator from './JokeGenerator';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit/dist/createAction';
 
 interface TodoFormErrors {
   title?: string;
   content?: string;
 }
 
-function TodoFormComponent() {
+interface TodoFormComponentProps {
+  isModalShown: boolean;
+  setIsModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  type: 'Create' | 'Edit';
+  initalValue?: TodoState;
+  renderButton: (callback: () => void) => JSX.Element;
+}
+
+function TodoFormComponent({
+  isModalShown,
+  setIsModalShown,
+  type,
+  initalValue,
+  renderButton,
+}: TodoFormComponentProps) {
   const dispatch = useAppDispatch();
-  const [isModalShown, setIsModalShown] = useState<boolean>(false);
   const initialValues: TodoForm = {
-    title: '',
-    content: '',
+    title: initalValue ? initalValue.title : '',
+    content: initalValue ? initalValue.content : '',
   };
 
   function handleModalShow() {
@@ -53,13 +69,7 @@ function TodoFormComponent() {
 
   return (
     <>
-      <h3>Add a new todo task</h3>
-      <Button variant="success" onClick={handleModalShow}>
-        Create
-      </Button>
-      <JokeGenerator />
-      <JokeQLGenerator />
-
+      {renderButton(handleModalShow)}
       <Modal
         show={isModalShown}
         onHide={hanldeModalClose}
@@ -67,7 +77,7 @@ function TodoFormComponent() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create a new todo task</Modal.Title>
+          <Modal.Title>{type} a todo task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -76,14 +86,28 @@ function TodoFormComponent() {
             onSubmit={(values, actions) => {
               const { title, content } = values;
               // dispatch createOneTodo action
-              dispatch(
-                createOneTodo({
-                  id: uuidv4(),
-                  title,
-                  content,
-                  createAt: new Date().getTime(),
-                })
-              );
+              // check now is editing or creating
+              // dispatch(todoAction())
+              if (type === 'Create') {
+                dispatch(
+                  createOneTodo({
+                    id: uuidv4(),
+                    title,
+                    content,
+                    createAt: new Date().getTime(),
+                  })
+                );
+                hanldeModalClose();
+                actions.setSubmitting(false);
+              } else {
+                dispatch(
+                  updateOneTodo({
+                    id: initalValue!.id,
+                    title,
+                    content,
+                  })
+                );
+              }
               hanldeModalClose();
               actions.setSubmitting(false);
             }}
