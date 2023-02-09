@@ -3,8 +3,8 @@ import Container from 'react-bootstrap/Container';
 import JokeGenerator from './JokeGenerator';
 import JokeQLGenerator from './JokeQLGenerator';
 import TodoCards from './TodoCards';
-import TodoFormComponent from './TodoFormComponent';
 import CreateTodo from './CreateTodo';
+import JokeThunkGenerator from './JokeThunkGenerator';
 
 const RTKpage = () => {
   return (
@@ -13,6 +13,7 @@ const RTKpage = () => {
       <h3>Add a new todo task</h3>
       <CreateTodo />
       <JokeGenerator />
+      <JokeThunkGenerator />
       <JokeQLGenerator />
 
       {/* <TodoFormComponent /> */}
