@@ -52,7 +52,11 @@ function JokeQLGenerator() {
   }
   return (
     <Form className="fetch-joke-options">
-      <Button style={{ margin: '1rem' }} onClick={generateTodoJoke}>
+      <Button
+        className="todo-button"
+        style={{ margin: '1rem' }}
+        onClick={generateTodoJoke}
+      >
         Fetch Joke graphql
       </Button>
       <div className="check-group">

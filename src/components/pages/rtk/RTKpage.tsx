@@ -5,10 +5,11 @@ import JokeQLGenerator from './JokeQLGenerator';
 import TodoCards from './TodoCards';
 import CreateTodo from './CreateTodo';
 import JokeThunkGenerator from './JokeThunkGenerator';
+import './rtkPage.scss';
 
 const RTKpage = () => {
   return (
-    <div>
+    <div className="rtk-page">
       <h1>RTK page</h1>
       <h3>Add a new todo task</h3>
       <CreateTodo />

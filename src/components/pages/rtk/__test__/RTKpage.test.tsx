@@ -200,8 +200,8 @@ describe('test edit todo form component and delete', () => {
   });
 });
 
-describe.only('test fetch joke with thunk', () => {
-  test.only('clcik fetch joke with thunk', async () => {
+describe('test fetch joke with thunk', () => {
+  test('clcik fetch joke with thunk', async () => {
     render(<RTKpage />, {});
     const user = userEvent.setup();
     const fetchJokeThunkButton = screen.getByRole('button', {

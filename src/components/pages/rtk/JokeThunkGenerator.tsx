@@ -13,6 +13,7 @@ function JokeThunkGenerator() {
   return (
     <Button
       variant="warning"
+      className="todo-button"
       style={{ marginLeft: '1rem' }}
       onClick={generateTodoJoke}
     >

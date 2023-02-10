@@ -33,6 +33,7 @@ function JokeQueryGenerator() {
   }
   return (
     <Button
+      className="todo-button"
       style={{ marginLeft: '1rem' }}
       variant="secondary"
       onClick={generateTodoJoke}
