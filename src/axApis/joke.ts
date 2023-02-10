@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { JOKE_SERVER_URL } from '../redux/apis/joke/jokeApi';
+import { JOKE_SERVER_URL } from '../redux/apis/joke/types';
 import { Joke, JokeSearch, JokeSearchResponse } from '../redux/apis/joke/types';
 
 const config: AxiosRequestConfig = {
@@ -9,25 +9,25 @@ const config: AxiosRequestConfig = {
   },
 };
 
-class JokeAxiosApi {
-  private static instance: JokeAxiosApi;
+class JokeAxApi {
+  private static instance: JokeAxApi;
   private static axios: AxiosInstance = axios.create(config);
 
-  public static getInstance(): JokeAxiosApi {
-    if (!JokeAxiosApi.instance) {
-      JokeAxiosApi.instance = new JokeAxiosApi();
+  public static getInstance(): JokeAxApi {
+    if (!JokeAxApi.instance) {
+      JokeAxApi.instance = new JokeAxApi();
     }
-    return JokeAxiosApi.instance;
+    return JokeAxApi.instance;
   }
   getRandomJoke() {
-    return JokeAxiosApi.axios.get<Joke>('');
+    return JokeAxApi.axios.get<Joke>('');
   }
 
   getSearchJoke(queryStrings: JokeSearch) {
-    return JokeAxiosApi.axios.get<JokeSearchResponse>('search', {
+    return JokeAxApi.axios.get<JokeSearchResponse>('search', {
       params: queryStrings,
     });
   }
 }
 
-export default JokeAxiosApi;
+export default JokeAxApi;

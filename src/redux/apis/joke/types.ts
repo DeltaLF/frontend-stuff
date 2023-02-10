@@ -1,3 +1,5 @@
+export const JOKE_SERVER_URL = 'https://icanhazdadjoke.com/';
+
 export interface Joke {
   id: string;
   joke: string;

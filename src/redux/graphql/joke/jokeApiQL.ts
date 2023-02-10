@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { request, gql, ClientError } from 'graphql-request';
-import { JOKE_SERVER_URL } from '../../apis/joke/jokeApi';
+import { JOKE_SERVER_URL } from '../../apis/joke/types';
 import { JokeQL, JokeQLKey, JokeQLOptions } from './types';
 
 export const JOKE_GRAPHQL_SERVER_URL = JOKE_SERVER_URL + 'graphql';

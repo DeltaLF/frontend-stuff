@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
-import JokeAxiosApi from '../../../axiosApis/joke';
+import JokeAxApi from '../../../axApis/joke';
 import { v4 as v4uuid } from 'uuid';
 
 export enum TodoPhase {
@@ -31,7 +31,8 @@ const initialState: TodosState = { todos: [] };
 const fetchRandomJoke = createAsyncThunk(
   'todos/fetchRandomJoke',
   async (arg, thunkAPI) => {
-    const response = await JokeAxiosApi.getInstance().getRandomJoke();
+    console.log('JokeAxApi', JokeAxApi);
+    const response = await JokeAxApi.getInstance().getRandomJoke();
     const { data } = response;
     if (data) {
       thunkAPI.dispatch(

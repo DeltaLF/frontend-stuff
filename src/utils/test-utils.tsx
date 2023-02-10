@@ -15,7 +15,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<Partial<RootState>>;
   store?: typeof store;
 }
-
+// create a new store for every test
 function render(
   ui: React.ReactElement,
   {

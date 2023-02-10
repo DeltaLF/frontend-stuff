@@ -1,5 +1,5 @@
 import { rest, graphql } from 'msw';
-import { JOKE_SERVER_URL } from '../src/redux/apis/joke/jokeApi';
+import { JOKE_SERVER_URL } from '../src/redux/apis/joke/types';
 import { graphql as graphqlRequest, buildSchema } from 'graphql';
 
 const jokeSchema = buildSchema(`
