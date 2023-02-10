@@ -1,7 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Joke } from './types';
-
-export const JOKE_SERVER_URL = 'https://icanhazdadjoke.com/';
+import { Joke, JOKE_SERVER_URL } from './types';
 
 export const jokeApi = createApi({
   reducerPath: 'jokeApi',

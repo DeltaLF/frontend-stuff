@@ -1,6 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
+import JokeAxApi from '../../../axApis/joke';
+import { v4 as v4uuid } from 'uuid';
 
 export enum TodoPhase {
   pending = 'pending',
@@ -25,6 +27,25 @@ interface TodosState {
 }
 
 const initialState: TodosState = { todos: [] };
+
+const fetchRandomJoke = createAsyncThunk(
+  'todos/fetchRandomJoke',
+  async (arg, thunkAPI) => {
+    console.log('JokeAxApi', JokeAxApi);
+    const response = await JokeAxApi.getInstance().getRandomJoke();
+    const { data } = response;
+    if (data) {
+      thunkAPI.dispatch(
+        createOneTodo({
+          id: v4uuid(),
+          title: 'Read a joke from thunk',
+          content: data.joke,
+          createAt: new Date().getTime(),
+        })
+      );
+    }
+  }
+);
 
 export const todosSlice = createSlice({
   name: ' todos',
@@ -54,6 +75,11 @@ export const todosSlice = createSlice({
       state.todos = [];
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchRandomJoke.fulfilled, (state, action) => {
+      // no need to handle random joke since it has been created as a todo
+    });
+  },
 });
 
 export const { createOneTodo, deleteOneTodo, deleteAllTodos, updateOneTodo } =
@@ -62,3 +88,6 @@ export const { createOneTodo, deleteOneTodo, deleteAllTodos, updateOneTodo } =
 export const selectTodos = (state: RootState) => state.todos.todos;
 
 export default todosSlice.reducer;
+
+// export thunk action
+export { fetchRandomJoke };

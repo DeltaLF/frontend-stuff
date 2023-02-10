@@ -7,7 +7,7 @@ function CreateTodo() {
 
   function createTodoButton(callback: () => void) {
     return (
-      <Button variant="success" onClick={callback}>
+      <Button variant="success" className="todo-button" onClick={callback}>
         Create
       </Button>
     );

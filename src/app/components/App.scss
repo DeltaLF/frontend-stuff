@@ -41,7 +41,7 @@ a:hover {
 
 .App {
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--background-color);
   color: var(--text-color);
   display: flex;
