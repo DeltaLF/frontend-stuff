@@ -199,3 +199,20 @@ describe('test edit todo form component and delete', () => {
     });
   });
 });
+
+describe.only('test fetch joke with thunk', () => {
+  test.only('clcik fetch joke with thunk', async () => {
+    render(<RTKpage />, {});
+    const user = userEvent.setup();
+    const fetchJokeThunkButton = screen.getByRole('button', {
+      name: /fetch joke with thunk/i,
+    });
+    await user.click(fetchJokeThunkButton);
+    await waitFor(() => {
+      screen.debug();
+      expect(
+        screen.getByRole('heading', { name: 'Read a joke from thunk' })
+      ).toBeInTheDocument();
+    });
+  });
+});
