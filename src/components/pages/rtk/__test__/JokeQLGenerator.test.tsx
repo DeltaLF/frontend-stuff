@@ -2,6 +2,8 @@ import JokeQLGenerator from '../JokeQLGenerator';
 import { render, screen, waitFor } from '../../../../utils/test-utils';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { server } from '../../../../../mocks/server';
+import { graphql } from 'msw';
 
 describe('test joke generator button', () => {
   test('inital state that all 3 checkboxs are selected', () => {
@@ -35,7 +37,7 @@ describe('test joke generator button', () => {
     await user.click(permalinkCheckbox);
     const idCheckbox = screen.getByRole('checkbox', { name: 'joke id' });
     expect(idCheckbox).toBeDisabled();
-    // undiable after check at least 2 checkboxs
+    // clickable after check at least 2 checkboxs
     await user.click(contentCheckbox);
     expect(idCheckbox).not.toBeDisabled();
   });
@@ -102,6 +104,27 @@ describe('test joke generator button', () => {
           'I’m on a whiskey diet. I’ve lost three days already.'
         )
       ).toBe(-1);
+    });
+  });
+
+  test('jokeQL server is unavailable ', async () => {
+    // overwrite properly handled mock server to 404
+    server.resetHandlers(
+      graphql.operation(async (req, res, ctx) => {
+        // return res(ctx.data('error'), ctx.errors(payload.errors));
+        return res(ctx.status(500), ctx.errors([{ message: 'server error' }]));
+      })
+    );
+    render(<JokeQLGenerator />, {});
+    const user = userEvent.setup();
+    const fetchJokeButton = screen.getByRole('button', {
+      name: /Fetch Joke graphql/i,
+    });
+    await user.click(fetchJokeButton);
+    await waitFor(() => {
+      const alertMessage = screen.getByRole('alert'); //, { name: /Request failed/i })
+      expect(alertMessage).toBeInTheDocument();
+      expect(alertMessage).toHaveTextContent(/Something went wrong/i);
     });
   });
 });

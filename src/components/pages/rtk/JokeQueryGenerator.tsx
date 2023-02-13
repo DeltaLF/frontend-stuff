@@ -14,10 +14,12 @@ function JokeQueryGenerator() {
   const properties = useGetRandomJokeQuery(undefined, { skip: isSkipped });
   const { data, error, isLoading, refetch } = properties;
   useEffect(() => {
-    if (error && 'error' in error) {
-      const message =
-        typeof error.error === 'string' ? error.error : 'something went wrong';
-      setErrorMessage(message);
+    if (error) {
+      if ('error' in error && typeof error.error === 'string') {
+        setErrorMessage(error.error);
+      } else {
+        setErrorMessage('something went wrong');
+      }
     }
   }, [error]);
   useEffect(() => {

@@ -2,6 +2,9 @@ import { render, screen, waitFor } from '../../../../utils/test-utils';
 import RTKpage from '../RTKpage';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { server } from '../../../../../mocks/server';
+import { rest } from 'msw';
+import { JOKE_SERVER_URL } from '../../../../redux/apis/joke/types';
 
 describe('test create todo form component', () => {
   it('tests modal behavior', async () => {
@@ -213,6 +216,30 @@ describe('test fetch joke with thunk', () => {
       expect(
         screen.getByRole('heading', { name: 'Read a joke from thunk' })
       ).toBeInTheDocument();
+    });
+  });
+  test('click fetch joke with thunk while the joke server is unavailable', async () => {
+    // overwrite properly handled mock server to 404
+    server.resetHandlers(
+      rest.get(JOKE_SERVER_URL, (req, res, ctx) => {
+        return res(
+          ctx.status(404),
+          ctx.json({
+            message: 'page not found',
+          })
+        );
+      })
+    );
+    render(<RTKpage />, {});
+    const user = userEvent.setup();
+    const fetchJokeThunkButton = screen.getByRole('button', {
+      name: /fetch joke with thunk/i,
+    });
+    await user.click(fetchJokeThunkButton);
+    await waitFor(() => {
+      const alertMessage = screen.getByRole('alert'); //, { name: /Request failed/i })
+      expect(alertMessage).toBeInTheDocument();
+      expect(alertMessage).toHaveTextContent(/Request failed/i);
     });
   });
 });
