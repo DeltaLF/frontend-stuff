@@ -31,7 +31,6 @@ const initialState: TodosState = { todos: [] };
 const fetchRandomJoke = createAsyncThunk(
   'todos/fetchRandomJoke',
   async (arg, thunkAPI) => {
-    console.log('JokeAxApi', JokeAxApi);
     const response = await JokeAxApi.getInstance().getRandomJoke();
     const { data } = response;
     if (data) {

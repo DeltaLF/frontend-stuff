@@ -7,9 +7,11 @@ import { v4 as v4uuid } from 'uuid';
 import Form from 'react-bootstrap/Form';
 import './jokeQLGenerator.scss';
 import { JokeQLOptions, JokeQLKey } from '../../../redux/graphql/joke/types';
+import Alert from '../../common/message/Alert';
 
 function JokeQLGenerator() {
   const dispatch = useAppDispatch();
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isSkipped, setIsSkipped] = useState<boolean>(true);
   // skip for prevent fetch data onmount
   const [jokeOptions, setJokeOptions] = useState<JokeQLOptions>({
@@ -20,6 +22,17 @@ function JokeQLGenerator() {
   const properties = useGetRandomJokeQLQuery(jokeOptions, { skip: isSkipped });
 
   const { data, error, isLoading, refetch } = properties;
+  useEffect(() => {
+    if (error && 'error' in error) {
+      const message =
+        typeof error.error === 'string' ? error.error : 'something went wrong';
+      setErrorMessage(message);
+    } else {
+      if (error) {
+        setErrorMessage('something went wrong');
+      }
+    }
+  }, [error]);
   useEffect(() => {
     if (data) {
       const { id, joke, permalink } = data;
@@ -52,6 +65,7 @@ function JokeQLGenerator() {
   }
   return (
     <Form className="fetch-joke-options">
+      <Alert setMessage={setErrorMessage} message={errorMessage} />
       <Button
         className="todo-button"
         style={{ margin: '1rem' }}
