@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import JokeQueryGenerator from './JokeQueryGenerator';
 import JokeQLGenerator from './JokeQLGenerator';
 import Cards from '../../common/cards/Cards';
@@ -22,14 +21,12 @@ const RTKpage = () => {
       <JokeThunkGenerator />
       <JokeQLGenerator />
 
-      <Container className="mt-3 mb-3">
-        <Cards
-          dataArr={todos}
-          renderCard={(data) => {
-            return <TodoCard todoState={data} />;
-          }}
-        />
-      </Container>
+      <Cards
+        dataArr={todos}
+        renderCard={(data) => {
+          return <TodoCard todoState={data} />;
+        }}
+      />
     </div>
   );
 };

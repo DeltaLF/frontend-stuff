@@ -1,4 +1,5 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
 import './cards.scss';
 
 type CardsProps<T> = {
@@ -7,7 +8,11 @@ type CardsProps<T> = {
 };
 
 function Cards<T>({ dataArr, renderCard }: CardsProps<T>) {
-  return <div className="cards-group">{dataArr.map(renderCard)}</div>;
+  return (
+    <Container className="mt-3 mb-3">
+      <div className="cards-group">{dataArr.map(renderCard)}</div>
+    </Container>
+  );
 }
 
 export default Cards;
