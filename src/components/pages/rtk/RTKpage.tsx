@@ -2,12 +2,17 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import JokeQueryGenerator from './JokeQueryGenerator';
 import JokeQLGenerator from './JokeQLGenerator';
-import TodoCards from './TodoCards';
+import Cards from '../../common/cards/Cards';
 import CreateTodo from './CreateTodo';
 import JokeThunkGenerator from './JokeThunkGenerator';
 import './rtkPage.scss';
+import { useAppSelector } from '../../../redux/hooks';
+import { RootState } from '../../../redux/store';
+import TodoCard from '../../common/cards/todo-card/TodoCard';
 
 const RTKpage = () => {
+  const todos = useAppSelector((state: RootState) => state.todos.todos);
+
   return (
     <div className="rtk-page">
       <h1>RTK page</h1>
@@ -17,9 +22,13 @@ const RTKpage = () => {
       <JokeThunkGenerator />
       <JokeQLGenerator />
 
-      {/* <TodoFormComponent /> */}
       <Container className="mt-3 mb-3">
-        <TodoCards />
+        <Cards
+          dataArr={todos}
+          renderCard={(data) => {
+            return <TodoCard todoState={data} />;
+          }}
+        />
       </Container>
     </div>
   );

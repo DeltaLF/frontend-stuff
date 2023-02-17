@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '../../../../utils/test-utils';
-import TodoCards from '../TodoCards';
+import Cards from '../../../common/cards/Cards';
+import TodoCard from '../../../common/cards/todo-card/TodoCard';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +9,7 @@ import {
   TodoPhase,
 } from '../../../../redux/features/todos/todosSlice';
 
-describe('tests TodoCards can access data from todoSlice and render it', () => {
+describe('tests Cards can access data from todoSlice and render it', () => {
   const title = 'first test todo title';
   const content = 'first test todo content';
   const todoInstance: TodoState = {
@@ -19,11 +20,17 @@ describe('tests TodoCards can access data from todoSlice and render it', () => {
     content,
   };
   it('renders one cards', () => {
-    render(<TodoCards />, {
-      preloadedState: {
-        todos: { todos: [todoInstance, todoInstance, todoInstance] },
-      },
-    });
+    render(
+      <Cards
+        dataArr={[todoInstance, todoInstance, todoInstance]}
+        renderCard={(data) => <TodoCard todoState={data} />}
+      />,
+      {
+        preloadedState: {
+          todos: { todos: [todoInstance, todoInstance, todoInstance] },
+        },
+      }
+    );
     const titleElements = screen.getAllByText(title);
     expect(titleElements).toHaveLength(3);
 

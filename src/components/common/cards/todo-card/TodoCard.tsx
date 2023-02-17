@@ -1,15 +1,17 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { TodoState } from '../../../redux/features/todos/todosSlice';
+import { TodoState } from '../../../../redux/features/todos/todosSlice';
 import './todo-card.scss';
 import Button from 'react-bootstrap/Button';
-import { useAppDispatch } from '../../../redux/hooks';
-import { deleteOneTodo } from '../../../redux/features/todos/todosSlice';
-import UpdateTodo from './UpdateTodo';
+import { useAppDispatch } from '../../../../redux/hooks';
+import { deleteOneTodo } from '../../../../redux/features/todos/todosSlice';
+import UpdateTodo from '../../../pages/rtk/UpdateTodo';
 
-type TodoCardType = { todoState: TodoState };
+type CardProps<T> = {
+  todoState: T;
+};
 
-function TodoCard({ todoState }: TodoCardType) {
+function TodoCard<T extends TodoState>({ todoState }: CardProps<T>) {
   const dispatch = useAppDispatch();
   const { title, content, id, createAt } = todoState;
   const parsedTime = new Date(createAt);
