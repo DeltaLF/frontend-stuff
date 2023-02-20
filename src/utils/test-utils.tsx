@@ -9,6 +9,7 @@ import type { store, RootState } from '../redux/store';
 import todosReducer from '../redux/features/todos/todosSlice';
 import { jokeApi } from '../redux/apis/joke/jokeApi';
 import { jokeQLApi } from '../redux/graphql/joke/jokeApiQL';
+import { renderServerQLApi } from '../redux/graphql/renderServer/renderServerQLApi';
 import logger from 'redux-logger';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
@@ -28,12 +29,14 @@ function render(
         todos: todosReducer,
         jokeApi: jokeApi.reducer,
         jokeQLApi: jokeQLApi.reducer,
+        renderServerQLApi: renderServerQLApi.reducer,
       },
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
           .concat(logger)
           .concat(jokeApi.middleware)
-          .concat(jokeQLApi.middleware),
+          .concat(jokeQLApi.middleware)
+          .concat(renderServerQLApi.middleware),
       devTools: process.env.NODE_ENV != 'production',
     }),
     ...renderOptions
