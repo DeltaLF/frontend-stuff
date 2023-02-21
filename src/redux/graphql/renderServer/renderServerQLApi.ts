@@ -12,9 +12,14 @@ const renderServerQLBaseQuery =
       return { data: result };
     } catch (error) {
       if (error instanceof ClientError) {
-        return { error: { status: error.response.status, data: error } };
+        return {
+          error: { status: error.response.status, data: error.response.data },
+        };
       }
-      return { error: { status: 500, data: error } };
+
+      return {
+        error: { status: 500, message: 'something went wrong!' },
+      };
     }
   };
 
@@ -43,15 +48,13 @@ export const renderServerQLApi = createApi({
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         // prevent passing non-serializable value in redux
         const { status, data } = baseQueryReturnValue;
-        let message = 'something wentwrong';
+        let message = 'something went wrong';
         if (data && typeof data === 'object' && 'message' in data) {
           message = data.message as string;
         }
         return {
           status,
-          data: {
-            message,
-          },
+          message,
         };
       },
     }),
@@ -88,9 +91,7 @@ export const renderServerQLApi = createApi({
         }
         return {
           status,
-          data: {
-            message,
-          },
+          message,
         };
       },
     }),
