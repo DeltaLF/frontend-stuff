@@ -1,14 +1,29 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { request, gql, ClientError } from 'graphql-request';
 
-import { Counter, RenderServerQLType, RENDER_SERVER_URI } from './types';
+import {
+  Counter,
+  CounterResponse,
+  RenderServerQLType,
+  RENDER_SERVER_URI,
+} from './types';
 
 const renderServerQLBaseQuery =
   ({ baseUrl }: { baseUrl: string }) =>
-  async ({ body }: { body: string }) => {
+  async ({
+    body,
+    variables,
+  }: {
+    body: string;
+    variables?: { [key: string]: null | number | string };
+  }) => {
     try {
       // #todo remember to properly type
-      const result = await request<RenderServerQLType>(baseUrl, body);
+      const result = await request<RenderServerQLType>(
+        baseUrl,
+        body,
+        variables
+      );
       return { data: result };
     } catch (error) {
       if (error instanceof ClientError) {
@@ -28,6 +43,7 @@ export const renderServerQLApi = createApi({
   baseQuery: renderServerQLBaseQuery({
     baseUrl: RENDER_SERVER_URI,
   }),
+  tagTypes: ['Counter'],
   endpoints: (builder) => ({
     getCounters: builder.query<Counter[], void>({
       query: () => ({
@@ -41,8 +57,14 @@ export const renderServerQLApi = createApi({
           }
         `,
       }),
+      // providesTags: ['Counter'],
+      providesTags: (result = [], error, arg) => {
+        // result: response data from BE
+        return result.map((counter) => {
+          return { type: 'Counter', id: counter.id };
+        });
+      },
       transformResponse: (response) => {
-        // #todo this might be wrong
         return response.counters ? response.counters : [];
       },
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
@@ -62,8 +84,8 @@ export const renderServerQLApi = createApi({
       query: ({ id }) => {
         return {
           body: gql`
-            query getCounter($counterId: ID!) {
-              counters(id: $counterId) {
+            query getCounter{
+              counters(id: ${id}) {
                 id
                 count
                 data
@@ -75,8 +97,11 @@ export const renderServerQLApi = createApi({
           },
         };
       },
+      providesTags: (_result, _err, id) =>
+        typeof id === 'string'
+          ? [{ type: 'Counter', id }]
+          : [{ type: 'Counter' }],
       transformResponse: (response) => {
-        // #todo this might be wrong
         if (!response.counter) {
           throw Error('Cannot fetch data from server');
         }
@@ -95,7 +120,60 @@ export const renderServerQLApi = createApi({
         };
       },
     }),
+    increaseCounter: builder.mutation<
+      CounterResponse,
+      { id: string; value: number | null }
+    >({
+      query: ({ id, value }) => {
+        return {
+          body: gql`
+            mutation increaseCounter($id: ID!, $value: Int) {
+              increaseCounter(id: $id, value: $value) {
+                code
+                success
+                message
+                counter {
+                  id
+                  count
+                  data
+                }
+              }
+            }
+          `,
+          variables: {
+            id,
+            value,
+          },
+        };
+      },
+      // invalidatesTags: ['Counter'], // update Counters
+      invalidatesTags: (result, _err, args) => {
+        return [{ type: 'Counter', id: args.id }];
+      },
+      transformResponse: (response) => {
+        if (!response.increaseCounter) {
+          throw Error('Cannot fetch data from server');
+        }
+        return response.increaseCounter;
+      },
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        // prevent passing non-serializable value in redux
+        const { status, data } = baseQueryReturnValue;
+        let message = 'something wentwrong';
+        if (data && typeof data === 'object' && 'message' in data) {
+          message = data.message as string;
+        }
+        return {
+          status,
+          message,
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetCountersQuery, useGetCounterQuery } = renderServerQLApi;
+export const {
+  useGetCountersQuery,
+  useGetCounterQuery,
+  useIncreaseCounterMutation,
+} = renderServerQLApi;

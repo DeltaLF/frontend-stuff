@@ -8,6 +8,7 @@ interface IStatusFilter<T> {
   error?: SerializedError;
   data: T | T[];
   children?: JSX.Element;
+  className?: string;
 }
 
 function StatusFilter<T>({
@@ -15,6 +16,7 @@ function StatusFilter<T>({
   error,
   data,
   children,
+  className,
 }: IStatusFilter<T>): JSX.Element {
   //   if (error) {
   //     return <p className="mt-3"> {error.message}</p>;
@@ -39,7 +41,7 @@ function StatusFilter<T>({
     }
   }, [error]);
   return (
-    <div className="mt-3">
+    <div className={className}>
       <Alert setMessage={setErrorMessage} message={errorMessage} />
       {/* {!!error && <p> {error.message}</p>} */}
       {!!loading && (
@@ -47,7 +49,7 @@ function StatusFilter<T>({
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       )}
-      {!!children && children}
+      {!!children && !loading && children}
       {!data && !loading && <p>No data yet...</p>}
     </div>
   );

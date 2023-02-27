@@ -41,7 +41,15 @@ export type Counter = {
   data: string;
 };
 
+export type CounterResponse = {
+  code: number;
+  success: boolean;
+  message: string;
+  coutner: Counter;
+};
+
 export type RenderServerQLType = {
   counters?: Counter[];
   counter?: Counter;
+  increaseCounter?: CounterResponse;
 };
