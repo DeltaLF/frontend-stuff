@@ -24,7 +24,7 @@ const RTKpage = () => {
       <Cards
         dataArr={todos}
         renderCard={(data) => {
-          return <TodoCard todoState={data} />;
+          return <TodoCard todoState={data} key={data.id} />;
         }}
       />
     </div>

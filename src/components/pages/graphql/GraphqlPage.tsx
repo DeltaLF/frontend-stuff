@@ -1,11 +1,12 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
 import Cards from '../../common/cards/Cards';
 import CounterFetcher from './CounterFetcher';
 import { useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import StatusFilter from '../../common/status/StatusFilter';
 import { Counter } from '../../../redux/graphql/renderServer/types';
+import './graphqlPage.scss';
+import CounterCard from '../../common/cards/counter-card/CounterCard';
 
 const GraphqlPage = () => {
   const queryCounters = useAppSelector(
@@ -22,12 +23,7 @@ const GraphqlPage = () => {
       <StatusFilter data={data} error={error} loading={status === 'pending'}>
         <Cards
           dataArr={(data as Counter[]) || []}
-          renderCard={(data) => (
-            <Card className="todo-card">
-              <Card.Header>{data.data}</Card.Header>
-              <h3>{data.count}</h3>
-            </Card>
-          )}
+          renderCard={(data) => <CounterCard data={data} key={data.id} />}
         />
       </StatusFilter>
     </div>

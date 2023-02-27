@@ -1,0 +1,11 @@
+.counter-card {
+  .card-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    h3 {
+      margin: 0;
+    }
+  }
+}
