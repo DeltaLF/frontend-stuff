@@ -32,11 +32,11 @@ const Navbar = () => {
           Graphql
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item>
+      {/* <Nav.Item>
         <Nav.Link as={Link} to="/utils">
           Utils
         </Nav.Link>
-      </Nav.Item>
+      </Nav.Item> */}
       <Nav.Item>
         <div className="Navbar--icon" onClick={toggleThemeHandler}>
           {theme === 'light' ? <Sun /> : <Moon />}

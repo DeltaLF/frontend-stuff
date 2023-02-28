@@ -20,9 +20,9 @@ test('redner home page by default', async () => {
   expect(global.window.location.pathname).toContain('/graphql');
 
   // check utils
-  const utilsNav = screen.getByRole('link', { name: /utils/i });
-  await user.click(utilsNav);
-  expect(global.window.location.pathname).toContain('/utils');
+  // const utilsNav = screen.getByRole('link', { name: /utils/i });
+  // await user.click(utilsNav);
+  // expect(global.window.location.pathname).toContain('/utils');
 });
 
 test('toggle theme', async () => {
