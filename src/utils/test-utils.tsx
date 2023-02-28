@@ -23,6 +23,7 @@ function render(
     preloadedState = {
       todos: { todos: [] },
     },
+    //@ts-ignore  logger is not needed
     store = configureStore({
       preloadedState,
       reducer: {
@@ -33,7 +34,7 @@ function render(
       },
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
-          .concat(logger)
+          // .concat(logger)
           .concat(jokeApi.middleware)
           .concat(jokeQLApi.middleware)
           .concat(renderServerQLApi.middleware),

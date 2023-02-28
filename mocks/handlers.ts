@@ -38,19 +38,8 @@ export const handlers = [
   }),
   // get random joke with grahql
   // handle a "joke" query
-  graphql.query('joke', (req, res, ctx) => {
+  graphql.query('joke', async (req, res, ctx) => {
     // mws doesn't handle anoymous Graphql (the joke graphql is an anonymous graphql) so use graph.operation as workaround
-    return res(
-      ctx.data({
-        joke: {
-          id: 'vXgNZ0wcxAd',
-          joke: 'I’m on a whiskey diet. I’ve lost three days already.',
-          permalink: 'https://icanhazdadjoke.com/j/vXgNZ0wcxAd',
-        },
-      })
-    );
-  }),
-  graphql.operation(async (req, res, ctx) => {
     const reqJson = await req.json();
     const { query } = reqJson;
     /* 
@@ -66,5 +55,17 @@ export const handlers = [
     // use JSON parse, stringify to make data become the normal javascript object
     const data = await JSON.parse(JSON.stringify(payload.data));
     return res(ctx.data(data), ctx.errors(payload.errors));
+    // return res(
+    //   ctx.data({
+    //     joke: {
+    //       id: 'vXgNZ0wcxAd',
+    //       joke: 'I’m on a whiskey diet. I’ve lost three days already.',
+    //       permalink: 'https://icanhazdadjoke.com/j/vXgNZ0wcxAd',
+    //     },
+    //   })
+    // );
+  }),
+  graphql.operation(async (req, res, ctx) => {
+    // this callback will be invoked if graphql is not matched
   }),
 ];
