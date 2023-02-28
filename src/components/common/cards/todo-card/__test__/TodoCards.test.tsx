@@ -1,13 +1,13 @@
-import { render, screen, waitFor } from '../../../../utils/test-utils';
-import Cards from '../../../common/cards/Cards';
-import TodoCard from '../../../common/cards/todo-card/TodoCard';
+import { render, screen, waitFor } from '../../../../../utils/test-utils';
+import Cards from '../../Cards';
+import TodoCard from '../TodoCard';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { v4 as uuidv4 } from 'uuid';
 import {
   TodoState,
   TodoPhase,
-} from '../../../../redux/features/todos/todosSlice';
+} from '../../../../../redux/features/todos/todosSlice';
 
 describe('tests Cards can access data from todoSlice and render it', () => {
   const title = 'first test todo title';

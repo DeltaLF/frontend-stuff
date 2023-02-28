@@ -35,7 +35,7 @@ export const jokeQLApi = createApi({
         }
         return {
           body: gql`
-            query {
+            query joke{
               joke {
                 ${queryKey}
               }

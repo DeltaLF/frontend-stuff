@@ -1,28 +1,8 @@
 import { rest, graphql } from 'msw';
 import { JOKE_SERVER_URL } from '../src/redux/apis/joke/types';
-import { graphql as graphqlRequest, buildSchema } from 'graphql';
-
-const jokeSchema = buildSchema(`
-type Query{
-  joke: Joke
-}
-
-type Joke {
-  id: String
-  joke: String
-  permalink: String
-}
-`);
-
-const jokeRoot = {
-  joke: () => {
-    return {
-      id: 'vXgNZ0wcxAd',
-      joke: 'I’m on a whiskey diet. I’ve lost three days already.',
-      permalink: 'https://icanhazdadjoke.com/j/vXgNZ0wcxAd',
-    };
-  },
-};
+import { graphql as graphqlRequest } from 'graphql';
+import { jokeSchema, jokeRoot } from './graphql_mock/joke';
+import { counterSchema, counterRoot } from './graphql_mock/counter';
 
 export const handlers = [
   // get random joke
@@ -36,21 +16,10 @@ export const handlers = [
       })
     );
   }),
+  // ---------------------- graphql server handler ----------------------
   // get random joke with grahql
   // handle a "joke" query
-  graphql.query('joke', (req, res, ctx) => {
-    // mws doesn't handle anoymous Graphql (the joke graphql is an anonymous graphql) so use graph.operation as workaround
-    return res(
-      ctx.data({
-        joke: {
-          id: 'vXgNZ0wcxAd',
-          joke: 'I’m on a whiskey diet. I’ve lost three days already.',
-          permalink: 'https://icanhazdadjoke.com/j/vXgNZ0wcxAd',
-        },
-      })
-    );
-  }),
-  graphql.operation(async (req, res, ctx) => {
+  graphql.query('joke', async (req, res, ctx) => {
     const reqJson = await req.json();
     const { query } = reqJson;
     /* 
@@ -66,5 +35,35 @@ export const handlers = [
     // use JSON parse, stringify to make data become the normal javascript object
     const data = await JSON.parse(JSON.stringify(payload.data));
     return res(ctx.data(data), ctx.errors(payload.errors));
+  }),
+  // for counter server
+  graphql.query('getAllCounters', async (req, res, ctx) => {
+    const reqJson = await req.json();
+    const { query } = reqJson;
+    const payload = await graphqlRequest({
+      schema: counterSchema,
+      source: query,
+      rootValue: counterRoot,
+      variableValues: req.variables,
+    });
+    const data = await JSON.parse(JSON.stringify(payload.data));
+    return res(ctx.data(data), ctx.errors(payload.errors));
+  }),
+  // graphql.query('counter', async (req, res, ctx) => {}),
+  graphql.mutation('increaseCounter', async (req, res, ctx) => {
+    const reqJson = await req.json();
+    const { query } = reqJson;
+    const payload = await graphqlRequest({
+      schema: counterSchema,
+      source: query,
+      rootValue: counterRoot,
+      variableValues: req.variables,
+    });
+    const data = await JSON.parse(JSON.stringify(payload.data));
+    return res(ctx.data(data), ctx.errors(payload.errors));
+  }),
+  graphql.operation(async (req, res, ctx) => {
+    console.log('graphql is mismatched!', req.body);
+    // this callback will be invoked if graphql is not matched
   }),
 ];
