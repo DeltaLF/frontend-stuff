@@ -159,7 +159,8 @@ export const renderServerQLApi = createApi({
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         // prevent passing non-serializable value in redux
         const { status, data } = baseQueryReturnValue;
-        let message = 'something wentwrong';
+
+        let message = 'something went wrong';
         if (data && typeof data === 'object' && 'message' in data) {
           message = data.message as string;
         }

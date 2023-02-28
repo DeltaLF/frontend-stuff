@@ -13,20 +13,24 @@ function CounterCard({ data }: { data: Counter }) {
     <Card className="counter-card" key={data.id}>
       <Card.Header>{data.data}</Card.Header>
       <Card.Body>
-        <DashCircle
-          onClick={() => {
-            increaseCoutner({ id: data.id, value: -1 });
-          }}
-        />
+        <div className="decrease-counter" aria-label="decrease-counter">
+          <DashCircle
+            onClick={() => {
+              increaseCoutner({ id: data.id, value: -1 });
+            }}
+          />
+        </div>
+
         <StatusFilter data={data} loading={isLoading}>
           <h3>{data.count}</h3>
         </StatusFilter>
-
-        <PlusCircle
-          onClick={() => {
-            increaseCoutner({ id: data.id, value: 1 });
-          }}
-        />
+        <div className="increase-counter" aria-label="increase-counter">
+          <PlusCircle
+            onClick={() => {
+              increaseCoutner({ id: data.id, value: 1 });
+            }}
+          />
+        </div>
       </Card.Body>
     </Card>
   );
