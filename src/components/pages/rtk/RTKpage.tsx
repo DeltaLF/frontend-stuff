@@ -8,6 +8,7 @@ import './rtkPage.scss';
 import { useAppSelector } from '../../../redux/hooks';
 import { RootState } from '../../../redux/store';
 import TodoCard from '../../common/cards/todo-card/TodoCard';
+import WrappedTooltips from '../../common/message/WrappedTooltips';
 
 const RTKpage = () => {
   const todos = useAppSelector((state: RootState) => state.todos.todos);
@@ -17,6 +18,7 @@ const RTKpage = () => {
       <h1>RTK page</h1>
       <h3>Add a new todo task</h3>
       <CreateTodo />
+
       <JokeQueryGenerator />
       <JokeThunkGenerator />
       <JokeQLGenerator />

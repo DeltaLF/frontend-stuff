@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import './jokeQLGenerator.scss';
 import { JokeQLOptions, JokeQLKey } from '../../../redux/graphql/joke/types';
 import Alert from '../../common/message/Alert';
+import WrappedTooltips from '../../common/message/WrappedTooltips';
 
 function JokeQLGenerator() {
   const dispatch = useAppDispatch();
@@ -66,13 +67,18 @@ function JokeQLGenerator() {
   return (
     <Form className="fetch-joke-options">
       <Alert setMessage={setErrorMessage} message={errorMessage} />
-      <Button
-        className="todo-button"
-        style={{ margin: '1rem' }}
-        onClick={generateTodoJoke}
+      <WrappedTooltips
+        content="Fetch a thrid party joke graphql API with redux toolkit query. There are 3 radio options that are used to configure the graphql query"
+        placement="top"
       >
-        Fetch Joke graphql
-      </Button>
+        <Button
+          className="todo-button"
+          style={{ margin: '1rem' }}
+          onClick={generateTodoJoke}
+        >
+          Fetch Joke graphql
+        </Button>
+      </WrappedTooltips>
       <div className="check-group">
         <Form.Check
           inline

@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { createOneTodo } from '../../../redux/features/todos/todosSlice';
 import { v4 as v4uuid } from 'uuid';
 import Alert from '../../common/message/Alert';
+import WrappedTooltips from '../../common/message/WrappedTooltips';
 
 function JokeQueryGenerator() {
   const dispatch = useAppDispatch();
@@ -45,14 +46,19 @@ function JokeQueryGenerator() {
   return (
     <>
       <Alert setMessage={setErrorMessage} message={errorMessage} />
-      <Button
-        className="todo-button"
-        style={{ marginLeft: '1rem' }}
-        variant="secondary"
-        onClick={generateTodoJoke}
+      <WrappedTooltips
+        content="First fetch a thrid party joke API with redux toolkit query then create a todo card with the response data"
+        placement="top"
       >
-        Fetch Joke with RTK Query
-      </Button>
+        <Button
+          className="todo-button"
+          style={{ marginLeft: '1rem' }}
+          variant="secondary"
+          onClick={generateTodoJoke}
+        >
+          Fetch Joke with RTK Query
+        </Button>
+      </WrappedTooltips>
     </>
   );
 }

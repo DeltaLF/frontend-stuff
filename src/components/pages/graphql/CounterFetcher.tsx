@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useGetCountersQuery } from '../../../redux/graphql/renderServer/renderServerQLApi';
 import Alert from '../../common/message/Alert';
+import WrappedTooltips from '../../common/message/WrappedTooltips';
 
 function CounterFetcher() {
   const { data, error, isLoading, refetch } = useGetCountersQuery();
@@ -13,14 +14,19 @@ function CounterFetcher() {
   return (
     <>
       <Alert setMessage={setErrorMessage} message={errorMessage} />
-      <Button
-        variant="warning"
-        className="todo-button"
-        style={{ marginLeft: '1rem' }}
-        onClick={fetchCoutners}
+      <WrappedTooltips
+        content="Fetch from a graphql backend implemented by myself"
+        placement="top"
       >
-        Fetch Counters
-      </Button>
+        <Button
+          variant="warning"
+          className="todo-button"
+          style={{ marginLeft: '1rem' }}
+          onClick={fetchCoutners}
+        >
+          Fetch Counters
+        </Button>
+      </WrappedTooltips>
     </>
   );
 }
