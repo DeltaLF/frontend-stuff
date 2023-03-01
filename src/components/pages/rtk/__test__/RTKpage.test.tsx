@@ -191,7 +191,7 @@ describe('test edit todo form component and delete', () => {
       const editModalHeaderInit = screen.queryByText(content);
       expect(editModalHeaderInit).toBeInTheDocument();
     });
-    const deleteButton = screen.getByLabelText('Delete');
+    const deleteButton = screen.getByLabelText('Delete').firstChild as Element;
     await user.click(deleteButton);
     // to-do is gone
     await waitFor(() => {

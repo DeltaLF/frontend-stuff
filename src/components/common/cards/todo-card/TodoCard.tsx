@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { deleteOneTodo } from '../../../../redux/features/todos/todosSlice';
 import UpdateTodo from '../../../pages/rtk/UpdateTodo';
+import { XSquareFill } from 'react-bootstrap-icons';
+import WrappedTooltips from '../../message/WrappedTooltips';
 
 type CardProps<T> = {
   todoState: T;
@@ -31,7 +33,7 @@ function TodoCard<T extends TodoState>({ todoState }: CardProps<T>) {
       <p>
         {content.substring(0, jokeUrlInd)}
         <a href={jokeUrl}>
-          <Button variant="outline-primary" size="sm">
+          <Button variant="outline-primary" size="sm" className="mt-2 mb-2">
             Source
           </Button>
         </a>
@@ -42,11 +44,13 @@ function TodoCard<T extends TodoState>({ todoState }: CardProps<T>) {
   return (
     <Card className="todo-card">
       <Card.Header>
-        <h5> {title}</h5>
+        <WrappedTooltips content={title} placement="top">
+          <h5>{title}</h5>
+        </WrappedTooltips>
         <UpdateTodo todoState={todoState} />
-        <Button aria-label="Delete" onClick={handleDeleteTodo} variant="danger">
-          <div>&#120;</div>
-        </Button>
+        <div className="delete" aria-label="Delete">
+          <XSquareFill onClick={handleDeleteTodo} />
+        </div>
       </Card.Header>
       <Card.Body>
         <blockquote className="blockquote mb-0">
