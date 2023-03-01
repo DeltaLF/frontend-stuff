@@ -39,6 +39,9 @@ a:hover {
   filter: brightness(80%);
 }
 
+#root {
+  overflow-x: hidden;
+}
 .App {
   width: 100vw;
   text-align: center;

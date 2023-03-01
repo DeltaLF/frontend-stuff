@@ -36,12 +36,20 @@
   }
 
   .card-body {
-    p {
-      font-size: small;
-      white-space: pre-line;
-    }
-    footer {
-      font-size: small;
+    blockquote {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      p {
+        font-size: small;
+        white-space: pre-line;
+      }
+      footer {
+        // margin: auto auto 0 auto;
+        font-size: small;
+        align-self: flex-end;
+      }
     }
   }
 }
