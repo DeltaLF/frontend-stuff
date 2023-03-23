@@ -1,0 +1,17 @@
+.customTabs {
+  &__header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  &__title {
+    flex: 1;
+    &--highlight {
+      border: 1px solid var(--primary-color);
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
