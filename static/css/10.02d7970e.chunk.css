@@ -1,0 +1,2 @@
+.customTabs__header{display:flex;flex-direction:row;justify-content:space-evenly;width:100%}.customTabs__title{flex:1 1}.customTabs__title--highlight{border:1px solid var(--primary-color)}.customTabs__title:hover{cursor:pointer}.customModal{background-color:var(--background-color);border:2px solid var(--primary-successs);height:25rem;left:50%;position:absolute;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:30rem}
+/*# sourceMappingURL=10.02d7970e.chunk.css.map*/
