@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import { SerializedError } from '@reduxjs/toolkit';
 import Alert from '../message/Alert';
+import SmallSpinner from '../loading/SmallSpinner';
 
 interface IStatusFilter<T> {
   loading: boolean;
@@ -44,11 +45,7 @@ function StatusFilter<T>({
     <div className={className}>
       <Alert setMessage={setErrorMessage} message={errorMessage} />
       {/* {!!error && <p> {error.message}</p>} */}
-      {!!loading && (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      )}
+      {!!loading && <SmallSpinner />}
       {!!children && !loading && children}
       {!data && !loading && <p>No data yet...</p>}
     </div>

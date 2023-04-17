@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Cards from '../../common/cards/Cards';
 import CounterFetcher from './CounterFetcher';
 import { useAppSelector } from '../../../redux/hooks';
@@ -8,13 +8,17 @@ import { Counter } from '../../../redux/graphql/renderServer/types';
 import './graphqlPage.scss';
 import CounterCard from '../../common/cards/counter-card/CounterCard';
 import { Alert } from 'react-bootstrap';
+import { useIncreaseCounterMutation } from '../../../redux/graphql/renderServer/renderServerQLApi';
 
 const GraphqlPage = () => {
   const queryCounters = useAppSelector(
     (state: RootState) =>
       state.renderServerQLApi.queries?.['getCounters(undefined)']
   );
-
+  const [increaseCoutner] = useIncreaseCounterMutation();
+  const increaseCounterHanlder = useCallback((id: string, value: number) => {
+    increaseCoutner({ id, value });
+  }, []);
   const { data, status, error } = queryCounters || {};
 
   return (
@@ -33,7 +37,13 @@ const GraphqlPage = () => {
       >
         <Cards
           dataArr={(data as Counter[]) || []}
-          renderCard={(data) => <CounterCard data={data} key={data.id} />}
+          renderCard={(data) => (
+            <CounterCard
+              {...data}
+              key={data.id}
+              increaseCounterHanlder={increaseCounterHanlder}
+            />
+          )}
         />
       </StatusFilter>
     </div>
