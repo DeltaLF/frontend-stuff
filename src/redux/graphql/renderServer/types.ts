@@ -33,7 +33,9 @@ backend schema
 */
 
 export const RENDER_SERVER_URI =
-  'https://graphql-backend-for-frontend-stuff.onrender.com/';
+  process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:4000'
+    : 'https://graphql-backend-for-frontend-stuff.onrender.com/';
 
 export type Counter = {
   id: string;
