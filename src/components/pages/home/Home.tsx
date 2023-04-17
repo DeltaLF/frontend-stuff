@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <Container className="Home">
       <h1>About this website</h1>
-      <h4>consists of various frontend techniques for practicing use</h4>
+      <h4>consists of various frontend techniques for practicing purposes</h4>
       <Button onClick={handleStartButton}>get started</Button>
     </Container>
   );
