@@ -1,0 +1,10 @@
+.customModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30rem;
+  height: 25rem;
+  border: 2px solid var(--primary-successs);
+  background-color: var(--background-color);
+}

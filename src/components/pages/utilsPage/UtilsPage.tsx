@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import ShowArticle from '../../common/loading/ShowArticle';
 import FormComponent from '../../../hooks/useForm/FormComponent';
 import CustomTabs, { TabProps, CustomTab } from '../../common/tabs/CustomTabs';
+import ModalExampleComponent from '../../common/modal/ModalExampleComponent';
 
 const UtilsPage = () => {
   const tabArrays: ReactElement<TabProps>[] = [
@@ -10,6 +11,9 @@ const UtilsPage = () => {
     </CustomTab>,
     <CustomTab key="formComponent" eventKey="formComponent">
       <FormComponent />
+    </CustomTab>,
+    <CustomTab key="modalComponent" eventKey="modalComponent">
+      <ModalExampleComponent />
     </CustomTab>,
   ];
   return (
