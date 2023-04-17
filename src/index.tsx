@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './app/App';
@@ -12,13 +12,40 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <HashRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </HashRouter>
-  </React.StrictMode>
+  <Profiler
+    id="App"
+    onRender={(
+      id,
+      phase,
+      actualDuration,
+      baseDuration,
+      startTime,
+      commitTime
+    ) => {
+      console.log(
+        'id:',
+        id,
+        'phase',
+        phase,
+        'actualDuration',
+        actualDuration,
+        'baseDuration',
+        baseDuration,
+        'startTime',
+        startTime,
+        'commitTime',
+        commitTime
+      );
+    }}
+  >
+    <React.StrictMode>
+      <HashRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </HashRouter>
+    </React.StrictMode>
+  </Profiler>
 );
 
 // If you want to start measuring performance in your app, pass a function
